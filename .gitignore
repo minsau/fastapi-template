@@ -8,3 +8,4 @@ coverage.xml
 .coverage
 .env.local
 .env.metabase
+.bash_history

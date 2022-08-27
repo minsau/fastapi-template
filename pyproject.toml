@@ -13,6 +13,9 @@ SQLAlchemy = "^1.4.39"
 factory-boy = "^3.2.1"
 arrow = "^1.2.2"
 psycopg2-binary = "^2.9.3"
+python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+alembic = "^1.8.1"
+pydantic = {extras = ["email"], version = "^1.9.2"}
 
 [tool.poetry.dev-dependencies]
 
