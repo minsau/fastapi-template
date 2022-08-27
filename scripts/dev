@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+_help() {
+  echo "running the server"
+  echo "    init      create initial user defined on env vars"
+  echo "    up        start the server in development mode"
+  echo ""
+  echo "testing code"
+  echo "    test      run tests, accepts test names as arguments"
+  echo "    cov       run tests and outputs coverage HTML to /tmp/cornershop-backend-test-results on the local machine"
+  echo ""
+  echo "migrations"
+  echo "    upgrade   run pending migrations"
+  echo "    makerev   make alembic revision"
+  echo "    sqlmig    show SQL of migration without executing it"
+  exit 1
+}
+
+# show usage if no argument is given
+arg=${1:-}
+shift || _help
+
+case ${arg} in
+init)
+  chmod +x scripts/init.sh
+  scripts/init.sh
+;;
+up|run|server|runserver)
+  uvicorn main:app --host=0.0.0.0 --port=8000 --reload
+;;
+test)
+  pytest -v -l --no-input --failed-first "$@"
+;;
+coverage|cov)
+  rm -rf /dev/shm/test-results/coverage
+  coverage erase
+  coverage run -m pytest -v -l --no-input "$@"
+  coverage combine
+  echo "Reporting coverage - this will take a second..."
+  coverage html -d /dev/shm/test-results/coverage
+  coverage report
+  coverage erase
+  printf "\n  Open the report in your browser: \e[1;93mfile:///tmp/cornershop-backend-test-results/coverage/index.html\e[0m\n"
+;;
+upgrade)
+  alembic upgrade head "$@"
+;;
+makerevision|makerev)
+  alembic revision --autogenerate -m "$@"
+;;
+*)
+  _help
+;;
+esac

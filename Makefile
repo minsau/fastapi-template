@@ -1,4 +1,4 @@
-# when you install the package, you will have to run make build to update image
+# when you install a package, you will have to run make build to update image
 build:
 	@docker-compose build
 
