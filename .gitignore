@@ -9,3 +9,5 @@ coverage.xml
 .env.local
 .env.metabase
 .bash_history
+.local
+.cache

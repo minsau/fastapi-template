@@ -16,6 +16,8 @@ psycopg2-binary = "^2.9.3"
 python-jose = {extras = ["cryptography"], version = "^3.3.0"}
 alembic = "^1.8.1"
 pydantic = {extras = ["email"], version = "^1.9.2"}
+passlib = "^1.7.4"
+emails = "^0.6"
 
 [tool.poetry.dev-dependencies]
 
