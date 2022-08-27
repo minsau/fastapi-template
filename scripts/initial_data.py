@@ -9,8 +9,6 @@ logger = logging.getLogger(__name__)
 
 
 def init() -> None:
-    # TODO: missing command to verify if database is alive
-    # TODO: implement retry mechanism
     db = Session(engine)
     init_db(db)
 
