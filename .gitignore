@@ -1,0 +1,10 @@
+__pycache__
+app.egg-info
+.env
+.envrc
+Pipfile
+.scannerwork
+coverage.xml
+.coverage
+.env.local
+.env.metabase
