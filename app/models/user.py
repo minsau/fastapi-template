@@ -12,3 +12,4 @@ class User(Base, table=True):
     hashed_password:str = Field(nullable=False)
     is_active: bool = Field(default=True)
     is_superuser: bool = Field(default=False)
+    invitation_sent: bool = Field(default=False)

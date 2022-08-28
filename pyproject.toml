@@ -18,6 +18,8 @@ pydantic = {extras = ["email"], version = "^1.9.2"}
 passlib = "^1.7.4"
 emails = "^0.6"
 python-multipart = "^0.0.5"
+celery = "^5.2.7"
+redis = "^4.3.4"
 
 [tool.poetry.dev-dependencies]
 factory-boy = "^3.2.1"

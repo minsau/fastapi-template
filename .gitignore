@@ -11,3 +11,4 @@ coverage.xml
 .bash_history
 .local
 .cache
+celerybeat-schedule
