@@ -1,0 +1,31 @@
+[tool.poetry]
+name = "fastapi-template"
+version = "0.1.0"
+description = ""
+authors = ["Saul Gomez Navarrete <minsau2@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+uvicorn = {extras = ["standard"], version = "^0.18.2"}
+fastapi = "^0.79.0"
+sqlmodel = "^0.0.6"
+SQLAlchemy = "^1.4.39"
+arrow = "^1.2.2"
+psycopg2-binary = "^2.9.3"
+python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+alembic = "^1.8.1"
+pydantic = {extras = ["email"], version = "^1.9.2"}
+passlib = "^1.7.4"
+emails = "^0.6"
+python-multipart = "^0.0.5"
+celery = "^5.2.7"
+redis = "^4.3.4"
+
+[tool.poetry.dev-dependencies]
+factory-boy = "^3.2.1"
+tenacity = "^8.0.1"
+pytest = "^7.1.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

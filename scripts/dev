@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+_help() {
+  echo "running the server"
+  echo "    init      create initial user defined on env vars"
+  echo "    up        start the server in development mode"
+  echo ""
+  echo "testing code"
+  echo "    test      run tests, accepts test names as arguments"
+  echo ""
+  echo "migrations"
+  echo "    upgrade   run pending migrations"
+  echo "    makerev   make alembic revision"
+  echo "    sqlmig    show SQL of migration without executing it"
+  exit 1
+}
+
+# show usage if no argument is given
+arg=${1:-}
+shift || _help
+
+case ${arg} in
+init)
+  chmod +x scripts/init.sh
+  scripts/init.sh
+;;
+up|run|server|runserver)
+  uvicorn main:app --host=0.0.0.0 --port=8000 --reload
+;;
+test)
+  POSTGRES_DB=postgres pytest -v -l --failed-first "$@"
+;;
+upgrade)
+  alembic upgrade head "$@"
+;;
+makerevision|makerev)
+  alembic revision --autogenerate -m "$@"
+;;
+*)
+  _help
+;;
+esac
