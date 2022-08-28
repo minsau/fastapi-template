@@ -1,7 +1,6 @@
 
 from typing import Callable
 from fastapi.testclient import TestClient
-from app.models.user import User
 from app.core.config import settings
 
 class TestLogin:
@@ -20,7 +19,7 @@ class TestLogin:
         assert 'access_token' in data
 
 
-    def test_should_return_forbiden_code(
+    def test_should_return_forbidden_code(
         self, client: TestClient, user_with_pass: Callable
     ) -> None:
         user = user_with_pass('test_pass')
