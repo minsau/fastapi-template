@@ -17,5 +17,6 @@ elif [[ "${RUNTYPE}" == "bash" ]]; then
 else
     printf "started Docker container as runtype \e[1;93mweb\e[0m\n"
     # run web server TODO: Improve this command for production
-    exec uvicorn app.main:app --host=0.0.0.0 --port=80 --reload
+    exec gunicorn --bind :$PORT --workers 1 --worker-class uvicorn.workers.UvicornWorker  --threads 8 main:app
+
 fi

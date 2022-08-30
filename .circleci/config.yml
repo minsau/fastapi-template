@@ -1,0 +1,48 @@
+version: 2.1
+
+orbs:
+  python: circleci/python@2.0.3
+
+jobs:
+  build-and-test:
+    docker:
+      - image: cimg/python:3.8
+        environment:
+          POSTGRES_DB: "test"
+          POSTGRES_USER: "test"
+          POSTGRES_PASSWORD: "test"
+          POSTGRES_SERVER: "localhost"
+          POSTGRES_PORT: 5432
+
+      - image: cimg/postgres:13.7.0
+        environment:
+          POSTGRES_DB: "test"
+          POSTGRES_USER: "test"
+          POSTGRES_PASSWORD: "test"
+
+    executor: python/default
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: poetry
+      - run:
+          command: |
+            poetry run pytest . -p no:warnings
+          name: Run tests
+
+  pre-commit-check:
+    docker:
+      - image: cimg/python:3.8
+
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: poetry
+
+      - run:
+          name: Run pre commit install
+          command: poetry run pre-commit install
+
+      - run:
+          name: Run pre commit check
+          command: poetry run pre-commit run -a
