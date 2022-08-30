@@ -12,7 +12,7 @@ The purpose of this project is to be used as base boiler plate for future web ap
 - Poetry: Package manager, it comes with some utilities out of the box that are pretty good for projects
 - Docker: Platform to deploy containers straightaway
 
-**Up docker containers**
+**Launch docker containers**
 
 In order to work properly the project needs some satellital applications for this we are using docker (the standar way).
 
@@ -25,33 +25,24 @@ cp .env.dist .env
 Once we have the `.env` ready we should launch our docker containers
 
 ```bash
-docker compose up -d
-```
-
-## With Docker
-
-```bash
 make up
 ```
 
-Once inside container you should run init (just if is the first time) and up
+Once inside container you should run init (just if is the first time) and then up
 ```bash
 dev init
 dev up
 ```
 Now all the changes that you have in your host machine will be reflected on container code
 
-## Without Docker
-### 1. Create and activate a Virtual env
+**Extra: work with VS Code**
 
-Install python 3.10 (minimum) and create a new virtual env for our project
-```bash
-pyenv install 3.10.4
-pyenv virtualenv 3.10.4 fastapi-template
-```
-Once the initial required modules are installed, you need to install project dependencies for that we need poetry and then the dependencies
+If as me you love Visual Studio code this project is configured to work with, just need one extension:
 
-```bash
-pip install poetry
-poetry install
-```
+- [Remote Container](https://code.visualstudio.com/docs/remote/containers)
+
+Once you have it installed just need to launch (with make up) the core project and then select the container in vs code
+with this you can go to debug menu and click in green button to launch project.
+
+When you are inside the container you could go to VS Code test section and you can appreciate that test discovery is active.
+

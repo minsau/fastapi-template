@@ -12,3 +12,6 @@ coverage.xml
 .local
 .cache
 celerybeat-schedule
+.config
+.python_history
+.vscode-server
