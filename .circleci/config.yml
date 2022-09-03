@@ -32,8 +32,12 @@ jobs:
           pkg-manager: poetry
       - run:
           command: |
-            poetry run pytest . -p no:warnings
+            mkdir test-results
+            poetry run pytest . -p no:warnings --junitxml=test-results/junit.xml
           name: Run tests
+
+      - store_test_results:
+          path: test-results
 
   lint:
     docker:
