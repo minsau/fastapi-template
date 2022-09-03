@@ -17,7 +17,6 @@ RUN poetry install
 
 USER app
 WORKDIR /opt/app
-RUN ls -la
 ENV PATH /opt/app/.local/bin:$PATH
 
 EXPOSE 8000
