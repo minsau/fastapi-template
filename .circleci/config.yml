@@ -13,6 +13,11 @@ jobs:
           POSTGRES_PASSWORD: "test"
           POSTGRES_SERVER: "localhost"
           POSTGRES_PORT: 5432
+          SENTRY_DSN: http://YourSentryDSN.com
+          FIRST_SUPERUSER: admin@yourproject.com
+          FIRST_SUPERUSER_PASSWORD: admin
+          CELERY_BROKER_URL: redis://redis:6379/0
+          CELERY_RESULT_BACKEND: redis://redis:6379/0
 
       - image: cimg/postgres:13.7
         environment:
