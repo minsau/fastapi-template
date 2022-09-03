@@ -4,9 +4,10 @@ from typing import Any, Dict
 
 import emails
 from emails.template import JinjaTemplate
-# from jose import jwt
 
 from app.core.config import settings
+
+# from jose import jwt
 
 
 def send_email(
@@ -50,6 +51,7 @@ def send_new_account_email(email_to: str, username: str, password: str) -> None:
             "link": link,
         },
     )
+
 
 def send_reset_password_email(email_to: str, email: str, token: str) -> None:
     project_name = settings.PROJECT_NAME

@@ -9,9 +9,8 @@ from app.core.config import settings
 from app.exceptions import BaseHttpException
 from app.utils.format import format_validation_errors
 
-app = FastAPI(
-    title=settings.PROJECT_NAME, openapi_url=f"{settings.API_V1_STR}/openapi.json"
-)
+app = FastAPI(title=settings.PROJECT_NAME, openapi_url=f"{settings.API_V1_STR}/openapi.json")
+
 
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
@@ -22,6 +21,7 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
         content=content,
     )
 
+
 @app.exception_handler(BaseHttpException)
 async def http_exception_handler(request: Request, exc: BaseHttpException):
     content = {"errors": exc.detail, "error_code": exc.error_code}
@@ -29,6 +29,7 @@ async def http_exception_handler(request: Request, exc: BaseHttpException):
         status_code=exc.status_code,
         content=content,
     )
+
 
 # Set all CORS enabled origins
 if settings.BACKEND_CORS_ORIGINS:

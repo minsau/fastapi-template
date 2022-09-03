@@ -3,12 +3,12 @@ FROM python:3.10.5-slim-bullseye
 RUN groupadd -g 1337 app && \
     useradd -m -d /opt/app -u 1337 -g app app
 
-ENV PYTHONPATH=${PYTHONPATH}:${PWD} 
+ENV PYTHONPATH=${PYTHONPATH}:${PWD}
 
 # TODO: Improve this to install dev dependencies just in development
 RUN pip3 install poetry
 WORKDIR /temp
-ADD pyproject.toml /temp/pyproject.toml 
+ADD pyproject.toml /temp/pyproject.toml
 RUN poetry config virtualenvs.create false
 
 RUN poetry install

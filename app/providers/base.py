@@ -28,30 +28,28 @@ class ProviderBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
 
     def get_by(self, db: Session, **kwargs) -> ModelType:
         query = db.query(self.model)
-        for attr,value in kwargs.items():
-            query = query.filter( getattr(self.model, attr)==value )
+        for attr, value in kwargs.items():
+            query = query.filter(getattr(self.model, attr) == value)
         return query.filter_by(**kwargs).first()
 
-    def filter(self, db: Session, ordering: str = 'created_at', desc: bool = False, **kwargs) -> List[ModelType]:
+    def filter(
+        self, db: Session, ordering: str = "created_at", desc: bool = False, **kwargs
+    ) -> List[ModelType]:
         query = db.query(self.model)
-        for attr,value in kwargs.items():
-            query = query.filter( getattr(self.model, attr)==value )
+        for attr, value in kwargs.items():
+            query = query.filter(getattr(self.model, attr) == value)
         query = query.filter_by(**kwargs)
         if desc:
             query = query.order_by(getattr(self.model, ordering).desc())
         else:
             query = query.order_by(getattr(self.model, ordering))
-    
+
         return query.all()
 
-    def get_multi(
-        self, db: Session, *, skip: int = 0, limit: int = 100
-    ) -> List[ModelType]:
+    def get_multi(self, db: Session, *, skip: int = 0, limit: int = 100) -> List[ModelType]:
         return db.query(self.model).offset(skip).limit(limit).all()
 
-    def get_all(
-        self, db: Session
-    ) -> List[ModelType]:
+    def get_all(self, db: Session) -> List[ModelType]:
         return db.query(self.model).all()
 
     def create(self, db: Session, *, obj_in: CreateSchemaType) -> ModelType:
@@ -62,7 +60,7 @@ class ProviderBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         db.refresh(db_obj)
         return db_obj
 
-    def bulk_create(self, db:Session, *, objects: List[CreateSchemaType]) -> bool:
+    def bulk_create(self, db: Session, *, objects: List[CreateSchemaType]) -> bool:
         objects_list = []
         for obj in objects:
             obj_in_data = jsonable_encoder(obj)
@@ -71,11 +69,7 @@ class ProviderBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         db.commit()
 
     def update(
-        self,
-        db: Session,
-        *,
-        db_obj: ModelType,
-        obj_in: Union[UpdateSchemaType, Dict[str, Any]]
+        self, db: Session, *, db_obj: ModelType, obj_in: Union[UpdateSchemaType, Dict[str, Any]]
     ) -> ModelType:
         obj_data = jsonable_encoder(db_obj)
         if isinstance(obj_in, dict):

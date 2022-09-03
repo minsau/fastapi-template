@@ -3,16 +3,14 @@ from typing import Dict
 from fastapi.testclient import TestClient
 from sqlalchemy.orm import Session
 
-from app.providers.user import user as user_provider 
 from app.core.config import settings
 from app.models.user import User
+from app.providers.user import user as user_provider
 from app.schemas.user import UserCreate, UserUpdate
 from tests.utils.random import random_email, random_lower_string
 
 
-def user_authentication_headers(
-    *, client: TestClient, email: str, password: str
-) -> Dict[str, str]:
+def user_authentication_headers(*, client: TestClient, email: str, password: str) -> Dict[str, str]:
     data = {"username": email, "password": password}
 
     r = client.post(f"{settings.API_V1_STR}/login/access-token", data=data)
@@ -28,6 +26,7 @@ def create_random_user(db: Session) -> User:
     user_in = UserCreate(username=email, email=email, password=password)
     user = user_provider.create(db=db, obj_in=user_in)
     return user
+
 
 def authentication_token_from_email(
     *, client: TestClient, email: str, db: Session

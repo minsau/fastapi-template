@@ -1,5 +1,4 @@
-from typing import Optional, Union
-from uuid import UUID
+from typing import Optional
 
 from pydantic import BaseModel, EmailStr
 
@@ -22,5 +21,3 @@ class UserCreate(UserBase):
 # Properties to receive via API on update
 class UserUpdate(UserBase):
     password: Optional[str] = None
-
-

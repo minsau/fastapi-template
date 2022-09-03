@@ -1,8 +1,9 @@
 import logging
 
+from sqlmodel import Session
+
 from app.core.init_db import init_db
 from app.core.session import engine
-from sqlmodel import Session
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

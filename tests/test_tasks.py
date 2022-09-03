@@ -1,10 +1,11 @@
 from sqlalchemy.orm import Session
+
+from app.providers.user import user as user_provider
 from app.tasks import send_user_invitation
 from tests.factories.user import UserFactory
-from app.providers.user import user as user_provider
+
 
 class TestSendInvitationTask:
-
     def test_should_update_invitation_sent_flag(self, db: Session) -> None:
         # Given
         user_created = UserFactory.create(is_active=False, invitation_sent=False)
