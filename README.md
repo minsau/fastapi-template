@@ -65,7 +65,6 @@ Once all is connected every time you push to a branch will run:
   - sonarqube gate
   - build image
   - push image
-  - deploy (a dummy deployment)
 
 - any other branch:
   - lint
