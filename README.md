@@ -46,3 +46,50 @@ with this you can go to debug menu and click in green button to launch project.
 
 When you are inside the container you could go to VS Code test section and you can appreciate that test discovery is active.
 
+## Continuous integration
+
+**Requirements**
+
+- Circle CI Account
+- Github account (for tasks)
+- Docker hub account (but you can adapt it for aws or gcp)
+
+**Circle CI**
+You need to connect your Github account with Circle CI in order to get the task progress.
+
+Once all is connected every time you push to a branch will run:
+
+- main, develop:
+  - lint
+  - test
+  - sonarqube gate
+  - build image
+  - push image
+  - deploy (a dummy deployment)
+
+- any other branch:
+  - lint
+  - test
+  - sonarqube gate
+
+**Locally**
+
+To activate pre-commit in local environments just need to install `pre-commit`
+
+```bash
+pre-commit install
+```
+Those will take some time until ends, once has finished every time you create a commit first will validate if match with code requirements and will fail if not
+
+**Build and Push image**
+In order to show how the build process should work the project will build and push a code image to Docker hub, for this you need some env vars in circle ci:
+
+- TAG: Image tag (ex. latest)
+- IMAGE_OWNER: Your docker hub user
+- CORE_IMAGE_NAME: Identifier for core image (ex. fastapi-template-core)
+- CELERY_IMAGE_NAME: Identifier for celery image (ex. fastapi-template-celery)
+- DOCKERHUB_PASS: Docker hub pass for push image
+- DOCKERHUB_USERNAME: Docker hub user for push image
+## Deployment
+
+Important, this project should be considered as an initial template, depending on your business necessities you will need to update a lot of things, so, although I want to create 360 project the deployment section should be coped by you.

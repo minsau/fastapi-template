@@ -1,12 +1,13 @@
 from sqlalchemy.orm import Session
-from app.schemas.user import UserCreate
-from app.providers.user import user as user_provider
-from tests.utils.random import random_email, random_lower_string
-from tests.factories.user import UserFactory
+
 from app.models.user import User
+from app.providers.user import user as user_provider
+from app.schemas.user import UserCreate
+from tests.factories.user import UserFactory
+from tests.utils.random import random_email, random_lower_string
+
 
 class TestUserBaseProvider:
-
     def create_user(self, db: Session) -> User:
         email = random_email()
         user = UserFactory.create(email=email)

@@ -5,20 +5,18 @@ from typing import Dict, Generator
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy.orm import Session
-from tests.factories.user import UserFactory
+from sqlmodel import SQLModel
 
-from main import app
+# from app.core.base_class import Base
+from app.core.config import settings
+from app.core.session import SessionLocal, engine, get_db
 from app.models.user import User
 from app.providers.user import user as user_provider
 from app.schemas.user import UserCreate
-
-#from app.core.base_class import Base
-from app.core.config import settings
+from main import app
+from tests.factories.user import UserFactory
 from tests.utils.auth import get_superuser_token_headers
 from tests.utils.user import authentication_token_from_email
-
-from app.core.session import engine, get_db, SessionLocal
-from sqlmodel import SQLModel
 
 
 @pytest.fixture()
@@ -29,6 +27,7 @@ def connection():
         yield conn
         # conn.rollback()
         SQLModel.metadata.drop_all()
+
 
 @pytest.fixture(autouse=True)
 def db(connection):
@@ -41,6 +40,7 @@ def db(connection):
 @pytest.fixture(autouse=True)
 def override_dependency(db: Session) -> None:
     app.dependency_overrides[get_db] = lambda: db
+
 
 @pytest.fixture()
 def client() -> Generator:
@@ -55,6 +55,7 @@ def random_lower_string() -> str:
 def random_email() -> str:
     return f"{random_lower_string()}@{random_lower_string()}.com"
 
+
 @pytest.fixture()
 def random_user(db: Session) -> User:
     email = random_email()
@@ -62,6 +63,7 @@ def random_user(db: Session) -> User:
     user_in = UserCreate(username=email, email=email, password=password, is_superuser=False)
     user = user_provider.create(db=db, obj_in=user_in)
     return user
+
 
 @pytest.fixture()
 def user_with_pass(db: Session) -> User:
@@ -73,6 +75,7 @@ def user_with_pass(db: Session) -> User:
 
     return _user_with_pass
 
+
 @pytest.fixture()
 def superuser_token_headers(client: TestClient, user_with_pass) -> Dict[str, str]:
     password = random_lower_string()
@@ -82,6 +85,4 @@ def superuser_token_headers(client: TestClient, user_with_pass) -> Dict[str, str
 
 @pytest.fixture()
 def normal_user_token_headers(client: TestClient, db: Session) -> Dict[str, str]:
-    return authentication_token_from_email(
-        client=client, email=settings.EMAIL_TEST_USER, db=db
-    )
+    return authentication_token_from_email(client=client, email=settings.EMAIL_TEST_USER, db=db)

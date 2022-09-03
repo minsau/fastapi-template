@@ -1,7 +1,7 @@
 version: "3.3"
 services:
   core:
-    build: 
+    build:
       context: .
       dockerfile: Dockerfile
     ports:
@@ -31,7 +31,7 @@ services:
     image: redis:alpine
 
   worker:
-    build: 
+    build:
       context: .
       dockerfile: Dockerfile
     volumes:
@@ -46,7 +46,7 @@ services:
       - db
 
   beater:
-    build: 
+    build:
       context: .
       dockerfile: Dockerfile
     volumes:

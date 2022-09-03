@@ -72,9 +72,7 @@ class Settings(BaseSettings):
     @validator("EMAILS_ENABLED", pre=True)
     def get_emails_enabled(cls, v: bool, values: Dict[str, Any]) -> bool:
         return bool(
-            values.get("SMTP_HOST")
-            and values.get("SMTP_PORT")
-            and values.get("EMAILS_FROM_EMAIL")
+            values.get("SMTP_HOST") and values.get("SMTP_PORT") and values.get("EMAILS_FROM_EMAIL")
         )
 
     EMAIL_TEST_USER: EmailStr = "test@example.com"  # type: ignore
@@ -82,7 +80,7 @@ class Settings(BaseSettings):
     FIRST_SUPERUSER_PASSWORD: str
     USERS_OPEN_REGISTRATION: bool = False
     CELERY_BROKER_URL: str
-    CELERY_RESULT_BACKEND:str
+    CELERY_RESULT_BACKEND: str
 
     class Config:
         case_sensitive = True

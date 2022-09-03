@@ -7,10 +7,11 @@ from sqlalchemy.orm import Session
 
 from app import models, schemas
 from app.api import deps
-from app.core.session import get_db
 from app.core.config import settings
-from app.utils.email import send_new_account_email
+from app.core.session import get_db
 from app.providers.user import user as user_provider
+from app.utils.email import send_new_account_email
+
 router = APIRouter()
 
 
@@ -100,9 +101,7 @@ def read_user_by_id(
     if user == current_user:
         return user
     if not user_provider.is_superuser(current_user):
-        raise HTTPException(
-            status_code=400, detail="The user doesn't have enough privileges"
-        )
+        raise HTTPException(status_code=400, detail="The user doesn't have enough privileges")
     return user
 
 
