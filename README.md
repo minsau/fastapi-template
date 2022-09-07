@@ -97,6 +97,13 @@ this is an optional feature that I recommend to consider but if don't want it yo
 For Sentry we need next env vars:
 - SENTRY_DSN: You can obtain it in your sentry account
 
+For New Relic we need next env vars:
+- NEW_RELIC_CONFIG_FILE: This is almost a constant, usually will have `newrelic.ini` as value, but you can change it for something that fits you.
+- NEW_RELIC_LICENSE_KEY: Seriously?
+- NEW_RELIC_ENVIRONMENT: This var indicates in what environment is happening the things, and is used for custom configurations.
+
+Additionally you can use Slack to receive some alerts from both services.
+
 ## Deployment
 
 Important, this project should be considered as an initial template, depending on your business necessities you will need to update a lot of things, so, although I want to create 360 project the deployment section should be coped by you.

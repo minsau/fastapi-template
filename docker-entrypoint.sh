@@ -15,8 +15,11 @@ elif [[ "${RUNTYPE}" == "bash" ]]; then
     exec /bin/bash
 
 else
-    printf "started Docker container as runtype \e[1;93mweb\e[0m\n"
-    # run web server TODO: Improve this command for production
-    exec gunicorn --bind :$PORT --workers 1 --worker-class uvicorn.workers.UvicornWorker  --threads 8 main:app
-
+    if [[ -z "${NEW_RELIC_LICENSE_KEY}" ]]; then
+      printf "started Docker container as runtype \e[1;93mweb\e[0m\n with newrelic"
+      exec NEW_RELIC_CONFIG_FILE=newrelic.ini newrelic-admin run-program gunicorn --bind :$PORT --workers 1 --worker-class uvicorn.workers.UvicornWorker  --threads 8 main:app
+    else
+      printf "started Docker container as runtype \e[1;93mweb\e[0m\n"
+      exec gunicorn --bind :$PORT --workers 1 --worker-class uvicorn.workers.UvicornWorker  --threads 8 main:app
+    fi
 fi
