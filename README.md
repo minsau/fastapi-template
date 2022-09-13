@@ -106,4 +106,56 @@ Additionally you can use Slack to receive some alerts from both services.
 
 ## Deployment
 
-Important, this project should be considered as an initial template, depending on your business necessities you will need to update a lot of things, so, although I want to create 360 project the deployment section should be coped by you.
+Important, this project should be considered as an initial template, depending on your business necessities you will need to update a lot of things, so I tried to find the easiest cloud service to deploy a basic project to offer the full experience with this template.
+
+**Requirements**
+
+- Heroku account
+- Internet
+- Heroku app
+- Configure environment vars
+- Install Heroku CLI
+- A credit card set up on Heroku
+
+IMPORTANT: This part could generate costs for you so, be careful
+
+**Create initial resources**
+
+You need some resources this could be achieved creating the add-ons directly from the cli, firstly
+we need a redis instance:
+```bash
+heroku addons:create heroku-redis:hobby-dev --app=fastapi-template
+```
+
+Create a postgres instance too:
+```bash
+heroku addons:create heroku-postgresql:hobby-dev --app=fastapi-template
+```
+
+**Build images**
+```bash
+docker build -f Dockerfile.deploy -t fastapi-template_core --build-arg RUNTYPE=web .
+docker build -f Dockerfile.deploy -t fastapi-template_worker --build-arg RUNTYPE=celery_worker .
+docker build -f Dockerfile.deploy -t fastapi-template_beater --build-arg RUNTYPE=celery_beater .
+```
+
+**Push images to heroku**
+```bash
+heroku container:push fastapi-template_core --app=fastapi-template
+heroku container:push fastapi-template_worker --app=fastapi-template
+heroku container:push fastapi-template_beater --app=fastapi-template
+```
+
+**Release images to heroku**
+```bash
+heroku container:release fastapi-template_core --app=fastapi-template
+heroku container:release fastapi-template_worker --app=fastapi-template
+heroku container:release fastapi-template_beater --app=fastapi-template
+```
+
+**Remove images from heroku**
+```bash
+heroku container:rm fastapi-template_core --app=fastapi-template
+heroku container:rm fastapi-template_worker --app=fastapi-template
+heroku container:rm fastapi-template_beater --app=fastapi-template
+```
