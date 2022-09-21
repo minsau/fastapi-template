@@ -1,8 +1,9 @@
 import secrets
 from typing import Any, Dict, List, Optional, Union
-
+import logging
 from pydantic import AnyHttpUrl, BaseSettings, EmailStr, HttpUrl, PostgresDsn, validator
 
+logger = logging.getLogger(__name__)
 
 class Settings(BaseSettings):
     API_V1_STR: str = "/api/v1"
@@ -77,11 +78,13 @@ class Settings(BaseSettings):
         )
 
     EMAIL_TEST_USER: EmailStr = "test@example.com"  # type: ignore
-    FIRST_SUPERUSER: EmailStr
+    # FIRST_SUPERUSER: EmailStr = "code@example.com"
     FIRST_SUPERUSER_PASSWORD: str
     USERS_OPEN_REGISTRATION: bool = False
     CELERY_BROKER_URL: str
     CELERY_RESULT_BACKEND: str
+
+    # logger.info(f"Settings loaded: {FIRST_SUPERUSER}")
 
     class Config:
         case_sensitive = True

@@ -6,3 +6,12 @@ build:
 up:
 	@docker-compose up -d
 	@docker-compose run --service-ports --rm core || true
+
+build-base:
+	@docker build -f Dockerfile -t fat-base .
+
+build-core:
+	@docker build -f Dockerfile.core -t fat-core .
+
+run-core:
+	@docker run fat-core -t core 

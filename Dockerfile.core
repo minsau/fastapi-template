@@ -1,0 +1,8 @@
+FROM fat-base:latest
+ARG INSTALL_DEV=false
+ARG RUNTYPE=web
+ARG PORT=80
+ENV RUNTYPE=$RUNTYPE
+ENV PORT=$PORT
+
+COPY . /opt/app

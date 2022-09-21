@@ -119,6 +119,16 @@ Important, this project should be considered as an initial template, depending o
 
 IMPORTANT: This part could generate costs for you so, be careful
 
+- Create digital ocean account
+- Create digital ocean API token
+- Install [doctl](https://docs.digitalocean.com/reference/doctl/how-to/install/) and [kubectl](https://kubernetes.io/docs/tasks/tools/)
+- Create registry
+- Create Redis and Postgres databases https://cloud.digitalocean.com/databases?i=5bd0d8
+- Get info for connection
+- Create an app
+- Create env vars
+
+
 **Create initial resources**
 
 You need some resources this could be achieved creating the add-ons directly from the cli, firstly

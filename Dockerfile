@@ -5,15 +5,20 @@ RUN groupadd -g 1337 app && \
 
 ENV PYTHONPATH=${PYTHONPATH}:${PWD}
 
-# TODO: Improve this to install dev dependencies just in development
 RUN pip3 install poetry
 WORKDIR /temp
 ADD pyproject.toml /temp/pyproject.toml
 RUN poetry config virtualenvs.create false
 
 RUN poetry install
-#ARG INSTALL_DEV=false
-#RUN bash -c "if [ $INSTALL_DEV == 'true' ] ; then poetry install --no-root ; else poetry install --no-root --no-dev ; fi"
+ARG INSTALL_DEV=true
+RUN bash -c "if [ $INSTALL_DEV == 'true' ] ; then poetry install --no-root ; else poetry install --no-root --no-dev ; fi"
+
+ENV SENTRY_DSN=$SENTRY_DSN
+ENV FIRST_SUPERUSER=$FIRST_SUPERUSER
+ENV FIRST_SUPERUSER_PASSWORD=$FIRST_SUPERUSER_PASSWORD
+ENV CELERY_BROKER_URL=$CELERY_BROKER_URL
+ENV CELERY_RESULT_BACKEND=$CELERY_RESULT_BACKEND
 
 USER app
 WORKDIR /opt/app
